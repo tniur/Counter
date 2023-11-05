@@ -9,28 +9,28 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var counterLabel: UILabel!
-    @IBOutlet weak var noteTextView: UITextView!
+    @IBOutlet private weak var counterLabel: UILabel!
+    @IBOutlet private weak var noteTextView: UITextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    var counterValue: Int = 0
+    private var counterValue: Int = 0
     
-    @IBAction func buttonDidTap(_ sender: Any) {
+    @IBAction private func buttonDidTap(_ sender: Any) {
         counterValue += 1
         updateCounterValue()
         addNote(buttonType: "plus")
     }
     
-    @IBAction func plusButtonDidTap(_ sender: Any) {
+    @IBAction private func plusButtonDidTap(_ sender: Any) {
         counterValue += 1
         updateCounterValue()
         addNote(buttonType: "plus")
     }
     
-    @IBAction func minusButtonDidTap(_ sender: Any) {
+    @IBAction private func minusButtonDidTap(_ sender: Any) {
         if counterValue != 0 {
             counterValue -= 1
             updateCounterValue()
@@ -41,17 +41,17 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func deleteButton(_ sender: Any) {
+    @IBAction private func deleteButton(_ sender: Any) {
         counterValue = 0
         updateCounterValue()
         addNote(buttonType: "delete")
     }
     
     private func updateCounterValue() {
-        let conterLabelPattern: String = "Значение счётчика: "
-        counterLabel.text = conterLabelPattern + String(counterValue)
+        let counterLabelPattern: String = "Значение счётчика: "
+        counterLabel.text = counterLabelPattern + String(counterValue)
     }
-
+    
     private func addNote(buttonType: String) {
         let date = Date()
         let dateFormatter = DateFormatter()
@@ -62,14 +62,16 @@ class ViewController: UIViewController {
         let dateString = dateFormatter.string(from: date)
         
         switch buttonType {
-            case "plus", "minusSuccess":
-            noteTextView.text += "\n" + "[\(dateString)]: значение изменено на -1/+1"
-            case "delete":
-                noteTextView.text += "\n" + "[\(dateString)]: значение сброшено"
-            case "minusError":
-                noteTextView.text += "\n" + "[\(dateString)]: попытка уменьшить значение счётчика ниже 0"
-            default:
-                return
+        case "plus":
+            noteTextView.text += "\n" + "[\(dateString)]: значение изменено на +1"
+        case "minusSuccess":
+            noteTextView.text += "\n" + "[\(dateString)]: значение изменено на -1"
+        case "delete":
+            noteTextView.text += "\n" + "[\(dateString)]: значение сброшено"
+        case "minusError":
+            noteTextView.text += "\n" + "[\(dateString)]: попытка уменьшить значение счётчика ниже 0"
+        default:
+            return
         }
     }
 }
